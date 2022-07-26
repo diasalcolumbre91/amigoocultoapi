@@ -24,7 +24,6 @@ public class Participante {
     @Column(name = "amigo_oculto")
     private String amigoOculto;
 
-    
     public Participante() {
     }
 

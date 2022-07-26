@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.github.amigoocultoapi.exceptions.NegocioException;
 import com.github.amigoocultoapi.responses.ErroResponse;
 
 @RestControllerAdvice
@@ -20,5 +21,11 @@ public class AmigoOcultoExceptionHandler {
 
         return ResponseEntity.badRequest()
         .body(new ErroResponse(ErroResponse.Tipo.VALIDACAO, mensagem));
+    }
+
+    @ExceptionHandler(NegocioException.class)
+    public ResponseEntity <ErroResponse> lidaComExcecoesDeNegocio(NegocioException exception) {
+        return ResponseEntity.badRequest()
+        .body(new ErroResponse(ErroResponse.Tipo.NEGOCIO, exception.getMessage()));
     }
 }
