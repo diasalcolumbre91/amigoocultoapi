@@ -1,9 +1,11 @@
 package com.github.amigoocultoapi.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.github.amigoocultoapi.exceptions.ParticipanteNaoEncontrado;
 import com.github.amigoocultoapi.models.Participante;
 import com.github.amigoocultoapi.repositories.ParticipanteRepository;
 
@@ -22,5 +24,13 @@ public class ParticipanteService {
 
     public List <Participante> listarParticipantes() {
         return participanteRepository.findAll();
+    }
+
+    public Optional<Participante> procurarParticipantePeloId(int id) {
+        return participanteRepository.findById(id);
+    }
+
+    public Participante procurarParticipantePeloIdDandoErro(int id) {
+        return procurarParticipantePeloId(id).orElseThrow(() -> new ParticipanteNaoEncontrado(id));
     }
 }
